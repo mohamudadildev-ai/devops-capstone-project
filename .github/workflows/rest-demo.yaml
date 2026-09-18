@@ -1,0 +1,65 @@
+name: REST CRUD Demo
+
+# Manually triggered workflow that boots the Accounts service and exercises
+# every CRUD endpoint with curl, so the command + real output can be
+# captured from the run log for the CREATE/LIST/READ/UPDATE/DELETE evidence.
+on:
+  workflow_dispatch:
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip wheel
+          pip install -r requirements.txt
+
+      - name: Start the Accounts service
+        run: |
+          gunicorn --bind=0.0.0.0:8080 --daemon --pid=/tmp/gunicorn.pid service:app
+          sleep 3
+          curl -s http://localhost:8080/health
+
+      - name: "::group::CREATE an account"
+        run: |
+          echo '$ curl -i -X POST http://localhost:8080/accounts -H "Content-Type: application/json" -d '"'"'{"name": "John Doe", "email": "jdoe@example.com", "address": "123 Main St, Anytown USA", "phone_number": "555-555-5555"}'"'"''
+          curl -i -X POST http://localhost:8080/accounts \
+            -H "Content-Type: application/json" \
+            -d '{"name": "John Doe", "email": "jdoe@example.com", "address": "123 Main St, Anytown USA", "phone_number": "555-555-5555"}'
+
+      - name: "::group::LIST all accounts"
+        run: |
+          echo '$ curl -i http://localhost:8080/accounts'
+          curl -i http://localhost:8080/accounts
+
+      - name: "::group::READ an account"
+        run: |
+          echo '$ curl -i http://localhost:8080/accounts/1'
+          curl -i http://localhost:8080/accounts/1
+
+      - name: "::group::UPDATE an account"
+        run: |
+          echo '$ curl -i -X PUT http://localhost:8080/accounts/1 -H "Content-Type: application/json" -d '"'"'{"name": "Jane Doe", "email": "jane.doe@example.com", "address": "456 Oak Ave, Anytown USA", "phone_number": "555-555-1234"}'"'"''
+          curl -i -X PUT http://localhost:8080/accounts/1 \
+            -H "Content-Type: application/json" \
+            -d '{"name": "Jane Doe", "email": "jane.doe@example.com", "address": "456 Oak Ave, Anytown USA", "phone_number": "555-555-1234"}'
+
+      - name: "::group::DELETE an account"
+        run: |
+          echo '$ curl -i -X DELETE http://localhost:8080/accounts/1'
+          curl -i -X DELETE http://localhost:8080/accounts/1
+          echo '$ curl -i http://localhost:8080/accounts/1'
+          curl -i http://localhost:8080/accounts/1
+
+      - name: Stop the Accounts service
+        if: always()
+        run: kill "$(cat /tmp/gunicorn.pid)" || true

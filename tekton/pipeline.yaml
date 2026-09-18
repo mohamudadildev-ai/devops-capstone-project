@@ -1,0 +1,77 @@
+# CD Pipeline for the Accounts microservice.
+#
+# Requires the following ClusterTasks/Tasks to be installed in the cluster
+# (already provided in the IBM Skills Network lab environment):
+#   - git-clone        (tekton catalog)
+#   - buildah           (tekton catalog)
+#   - openshift-client  (tekton catalog)
+# plus the flake8 and nose Tasks defined in tekton/tasks.yaml
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: cd-pipeline
+spec:
+  workspaces:
+    - name: pipeline-workspace
+  params:
+    - name: repo-url
+      type: string
+    - name: branch
+      type: string
+      default: main
+    - name: build-image
+      type: string
+      default: image-registry.openshift-image-registry.svc:5000/$(context.pipelineRun.namespace)/accounts:latest
+  tasks:
+    - name: clone
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: pipeline-workspace
+      params:
+        - name: url
+          value: $(params.repo-url)
+        - name: revision
+          value: $(params.branch)
+
+    - name: lint
+      runAfter: ["clone"]
+      taskRef:
+        name: flake8
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace
+
+    - name: tests
+      runAfter: ["lint"]
+      taskRef:
+        name: nose
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace
+
+    - name: build
+      runAfter: ["tests"]
+      taskRef:
+        name: buildah
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace
+      params:
+        - name: IMAGE
+          value: $(params.build-image)
+
+    - name: deploy
+      runAfter: ["build"]
+      taskRef:
+        name: openshift-client
+      workspaces:
+        - name: manifest-dir
+          workspace: pipeline-workspace
+      params:
+        - name: SCRIPT
+          value: |
+            oc apply -k $(workspaces.manifest-dir.path)/k8s
+            oc set image deployment/accounts accounts=$(params.build-image) --record
+            oc rollout status deployment/accounts
