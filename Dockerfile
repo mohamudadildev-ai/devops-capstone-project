@@ -11,8 +11,13 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Copy the application source
 COPY service/ ./service/
 
-# Run as a non-root user
-RUN useradd --uid 1000 flask-user && chown -R flask-user:flask-user /app
+# Run as a non-root user. Group is set to root (GID 0) and made writable
+# by the group, since OpenShift runs containers under an arbitrary UID
+# that always belongs to GID 0 -- this lets Flask create its instance/
+# folder (for the default SQLite file) regardless of the runtime UID.
+RUN useradd --uid 1000 flask-user && \
+    chown -R flask-user:0 /app && \
+    chmod -R g=u /app
 USER flask-user
 
 ENV PORT=8080
