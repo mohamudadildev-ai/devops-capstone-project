@@ -1,0 +1,602 @@
+Current runner version: '2.337.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260828.587
+Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+Build Date: 2026-08-28T16:44:25Z
+Worker ID: {1f8805b7-bdce-4eff-8af1-52f340b65d73}
+Azure Region: westus
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.5
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20260907.300.1
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+Packages: read
+##[endgroup]
+Secret source: Actions
+Cache mode: write
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+Complete job name: build
+##[group]Checking docker version
+##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+'1.48'
+Docker daemon API version: '1.48'
+##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+'1.48'
+Docker client API version: '1.48'
+##[endgroup]
+##[group]Clean up resources from previous jobs
+##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=69ec33"
+##[command]/usr/bin/docker network prune --force --filter "label=69ec33"
+##[endgroup]
+##[group]Create local container network
+##[command]/usr/bin/docker network create --label 69ec33 github_network_bf0138ee678f4217b423c8a5a17773e5
+43d7f2217254304248f1c82462367a65709cd0d20eca7b445e04d2c2eecada47
+##[endgroup]
+##[group]Starting postgres service container
+##[command]/usr/bin/docker pull postgres:13
+13: Pulling from library/postgres
+d7ecded7702a: Pulling fs layer
+80e8d95fdf53: Pulling fs layer
+fcfd49225910: Pulling fs layer
+947bdcac0ea3: Pulling fs layer
+097f34b018c0: Pulling fs layer
+4d2c7a7b3dba: Pulling fs layer
+8cb000c698bc: Pulling fs layer
+ba168ff08d42: Pulling fs layer
+bad194149a82: Pulling fs layer
+5f1cded65589: Pulling fs layer
+7d0650bb210f: Pulling fs layer
+23a39b1003e9: Pulling fs layer
+21f7a31efcb7: Pulling fs layer
+ae52c8ce1a35: Pulling fs layer
+bad194149a82: Waiting
+23a39b1003e9: Waiting
+5f1cded65589: Waiting
+7d0650bb210f: Waiting
+21f7a31efcb7: Waiting
+ae52c8ce1a35: Waiting
+947bdcac0ea3: Waiting
+097f34b018c0: Waiting
+ba168ff08d42: Waiting
+8cb000c698bc: Waiting
+80e8d95fdf53: Verifying Checksum
+80e8d95fdf53: Download complete
+fcfd49225910: Verifying Checksum
+fcfd49225910: Download complete
+d7ecded7702a: Verifying Checksum
+d7ecded7702a: Download complete
+947bdcac0ea3: Verifying Checksum
+947bdcac0ea3: Download complete
+097f34b018c0: Verifying Checksum
+097f34b018c0: Download complete
+4d2c7a7b3dba: Verifying Checksum
+4d2c7a7b3dba: Download complete
+8cb000c698bc: Verifying Checksum
+8cb000c698bc: Download complete
+ba168ff08d42: Verifying Checksum
+ba168ff08d42: Download complete
+5f1cded65589: Verifying Checksum
+5f1cded65589: Download complete
+7d0650bb210f: Download complete
+bad194149a82: Verifying Checksum
+bad194149a82: Download complete
+21f7a31efcb7: Download complete
+23a39b1003e9: Verifying Checksum
+23a39b1003e9: Download complete
+d7ecded7702a: Pull complete
+80e8d95fdf53: Pull complete
+fcfd49225910: Pull complete
+947bdcac0ea3: Pull complete
+097f34b018c0: Pull complete
+4d2c7a7b3dba: Pull complete
+8cb000c698bc: Pull complete
+ba168ff08d42: Pull complete
+bad194149a82: Pull complete
+5f1cded65589: Pull complete
+7d0650bb210f: Pull complete
+23a39b1003e9: Pull complete
+21f7a31efcb7: Pull complete
+ae52c8ce1a35: Pull complete
+Digest: sha256:4689940c683801b4ab839ab3b0a0a3555a5fe425371422310944e89eca7d8068
+Status: Downloaded newer image for postgres:13
+docker.io/library/postgres:13
+##[command]/usr/bin/docker create --name 5a7e972abd7345c78c723c0d820c841e_postgres13_c2fd0e --label 69ec33 --network github_network_bf0138ee678f4217b423c8a5a17773e5 --network-alias postgres -p 5432:5432 --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=5 -e "POSTGRES_PASSWORD=pgs3cr3t" -e "POSTGRES_DB=testdb" -e GITHUB_ACTIONS=true -e CI=true postgres:13
+fccf8311c98fe6406e74887fc2607e9edba25711e69198c2475400494a593b40
+##[command]/usr/bin/docker start fccf8311c98fe6406e74887fc2607e9edba25711e69198c2475400494a593b40
+fccf8311c98fe6406e74887fc2607e9edba25711e69198c2475400494a593b40
+##[command]/usr/bin/docker ps --all --filter id=fccf8311c98fe6406e74887fc2607e9edba25711e69198c2475400494a593b40 --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+fccf8311c98fe6406e74887fc2607e9edba25711e69198c2475400494a593b40 Up Less than a second (health: starting)
+##[command]/usr/bin/docker port fccf8311c98fe6406e74887fc2607e9edba25711e69198c2475400494a593b40
+5432/tcp -> 0.0.0.0:5432
+5432/tcp -> [::]:5432
+##[endgroup]
+##[group]Waiting for all services to be ready
+##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" fccf8311c98fe6406e74887fc2607e9edba25711e69198c2475400494a593b40
+starting
+postgres service is starting, waiting 2 seconds before checking again.
+##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" fccf8311c98fe6406e74887fc2607e9edba25711e69198c2475400494a593b40
+starting
+postgres service is starting, waiting 3 seconds before checking again.
+##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" fccf8311c98fe6406e74887fc2607e9edba25711e69198c2475400494a593b40
+starting
+postgres service is starting, waiting 7 seconds before checking again.
+##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" fccf8311c98fe6406e74887fc2607e9edba25711e69198c2475400494a593b40
+healthy
+postgres service is healthy.
+##[endgroup]
+Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+##[group]Run actions/checkout@v4
+with:
+  repository: mohamudadildev-ai/devops-capstone-project
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  persist-credentials: true
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+##[endgroup]
+Syncing repository: mohamudadildev-ai/devops-capstone-project
+##[group]Getting Git version info
+Working directory is '/home/runner/work/devops-capstone-project/devops-capstone-project'
+[command]/usr/bin/git version
+git version 2.55.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/5f649f63-c859-4e33-862e-c11a2c6996f1' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/devops-capstone-project/devops-capstone-project
+Deleting the contents of '/home/runner/work/devops-capstone-project/devops-capstone-project'
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/devops-capstone-project/devops-capstone-project
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/devops-capstone-project/devops-capstone-project/.git/
+[command]/usr/bin/git remote add origin https://github.com/mohamudadildev-ai/devops-capstone-project
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +c5e8dcc57ac42f97ccd6bb2080603f3aff1475d2:refs/remotes/origin/main
+From https://github.com/mohamudadildev-ai/devops-capstone-project
+ * [new ref]         c5e8dcc57ac42f97ccd6bb2080603f3aff1475d2 -> origin/main
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Switched to a new branch 'main'
+branch 'main' set up to track 'origin/main'.
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+c5e8dcc57ac42f97ccd6bb2080603f3aff1475d2
+Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+##[group]Run actions/setup-python@v5
+with:
+  python-version: 3.9
+  check-latest: false
+  token: ***
+  update-environment: true
+  allow-prereleases: false
+  freethreaded: false
+##[endgroup]
+##[group]Installed versions
+Version 3.9 was not found in the local cache
+(node:2697) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Version 3.9 is available for downloading
+Download from "https://github.com/actions/python-versions/releases/download/3.9.25-19039189640/python-3.9.25-linux-24.04-x64.tar.gz"
+Extract downloaded archive
+[command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/1aaf7c3a-4aac-4e07-a66b-a232f0077cdd -f /home/runner/work/_temp/db39c92c-bbca-4d0c-8568-044d84a02c3e
+Execute installation script
+Check if Python hostedtoolcache folder exist...
+Create Python 3.9.25 folder
+Copy Python binaries to hostedtoolcache folder
+Create additional symlinks (Required for the UsePythonVersion Azure Pipelines task and the setup-python GitHub Action)
+Upgrading pip...
+Looking in links: /tmp/tmp9qcatfbf
+Requirement already satisfied: setuptools in /opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/site-packages (79.0.1)
+Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/site-packages (23.0.1)
+Collecting pip
+Downloading pip-26.0.1-py3-none-any.whl (1.8 MB)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 39.0 MB/s eta 0:00:00
+
+Installing collected packages: pip
+Attempting uninstall: pip
+Found existing installation: pip 23.0.1
+Uninstalling pip-23.0.1:
+Successfully uninstalled pip-23.0.1
+Successfully installed pip-26.0.1
+Create complete file
+Successfully set up CPython (3.9.25)
+##[endgroup]
+##[group]Run python -m pip install --upgrade pip wheel
+^[[36;1mpython -m pip install --upgrade pip wheel^[[0m
+^[[36;1mpip install -r requirements.txt^[[0m
+shell: /usr/bin/bash -e {0}
+env:
+  pythonLocation: /opt/hostedtoolcache/Python/3.9.25/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.9.25/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.25/x64/lib
+##[endgroup]
+Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/site-packages (26.0.1)
+Collecting wheel
+  Downloading wheel-0.48.0-py3-none-any.whl.metadata (2.3 kB)
+Collecting packaging>=24.0 (from wheel)
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Downloading wheel-0.48.0-py3-none-any.whl (33 kB)
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+Installing collected packages: packaging, wheel
+
+Successfully installed packaging-26.3 wheel-0.48.0
+Collecting Flask==2.2.5 (from -r requirements.txt (line 2))
+  Downloading Flask-2.2.5-py3-none-any.whl.metadata (3.9 kB)
+Collecting Werkzeug==2.2.3 (from -r requirements.txt (line 3))
+  Downloading Werkzeug-2.2.3-py3-none-any.whl.metadata (4.4 kB)
+Collecting Flask-SQLAlchemy==3.0.5 (from -r requirements.txt (line 4))
+  Downloading flask_sqlalchemy-3.0.5-py3-none-any.whl.metadata (3.3 kB)
+Collecting SQLAlchemy==1.4.49 (from -r requirements.txt (line 5))
+  Downloading SQLAlchemy-1.4.49-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (10 kB)
+Collecting Flask-Talisman==1.1.0 (from -r requirements.txt (line 6))
+  Downloading flask_talisman-1.1.0-py2.py3-none-any.whl.metadata (18 kB)
+Collecting Flask-Cors==3.0.10 (from -r requirements.txt (line 7))
+  Downloading Flask_Cors-3.0.10-py2.py3-none-any.whl.metadata (5.4 kB)
+Collecting psycopg2-binary==2.9.9 (from -r requirements.txt (line 8))
+  Downloading psycopg2_binary-2.9.9-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.4 kB)
+Collecting python-dotenv==1.0.0 (from -r requirements.txt (line 9))
+  Downloading python_dotenv-1.0.0-py3-none-any.whl.metadata (21 kB)
+Collecting gunicorn==21.2.0 (from -r requirements.txt (line 10))
+  Downloading gunicorn-21.2.0-py3-none-any.whl.metadata (4.1 kB)
+Collecting click==8.1.7 (from -r requirements.txt (line 11))
+  Downloading click-8.1.7-py3-none-any.whl.metadata (3.0 kB)
+Collecting nose==1.3.7 (from -r requirements.txt (line 14))
+  Downloading nose-1.3.7-py3-none-any.whl.metadata (1.7 kB)
+Collecting pinocchio==0.4.3 (from -r requirements.txt (line 15))
+  Downloading pinocchio-0.4.3-py3-none-any.whl.metadata (975 bytes)
+Collecting coverage==7.3.2 (from -r requirements.txt (line 16))
+  Downloading coverage-7.3.2-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (8.1 kB)
+Collecting flake8==6.1.0 (from -r requirements.txt (line 17))
+  Downloading flake8-6.1.0-py2.py3-none-any.whl.metadata (3.8 kB)
+Collecting pylint==3.0.2 (from -r requirements.txt (line 18))
+  Downloading pylint-3.0.2-py3-none-any.whl.metadata (12 kB)
+Collecting factory-boy==3.3.0 (from -r requirements.txt (line 19))
+  Downloading factory_boy-3.3.0-py2.py3-none-any.whl.metadata (15 kB)
+Collecting Faker==19.13.0 (from -r requirements.txt (line 20))
+  Downloading Faker-19.13.0-py3-none-any.whl.metadata (15 kB)
+Collecting httpie==3.2.2 (from -r requirements.txt (line 21))
+  Downloading httpie-3.2.2-py3-none-any.whl.metadata (7.6 kB)
+Collecting Jinja2>=3.0 (from Flask==2.2.5->-r requirements.txt (line 2))
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting itsdangerous>=2.0 (from Flask==2.2.5->-r requirements.txt (line 2))
+  Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting importlib-metadata>=3.6.0 (from Flask==2.2.5->-r requirements.txt (line 2))
+  Downloading importlib_metadata-8.7.1-py3-none-any.whl.metadata (4.7 kB)
+Collecting MarkupSafe>=2.1.1 (from Werkzeug==2.2.3->-r requirements.txt (line 3))
+  Downloading markupsafe-3.0.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+Collecting greenlet!=0.4.17 (from SQLAlchemy==1.4.49->-r requirements.txt (line 5))
+  Downloading greenlet-3.2.5-cp39-cp39-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (4.1 kB)
+Collecting Six (from Flask-Cors==3.0.10->-r requirements.txt (line 7))
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Requirement already satisfied: packaging in /opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/site-packages (from gunicorn==21.2.0->-r requirements.txt (line 10)) (26.3)
+Collecting colorama (from pinocchio==0.4.3->-r requirements.txt (line 15))
+  Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+Collecting mccabe<0.8.0,>=0.7.0 (from flake8==6.1.0->-r requirements.txt (line 17))
+  Downloading mccabe-0.7.0-py2.py3-none-any.whl.metadata (5.0 kB)
+Collecting pycodestyle<2.12.0,>=2.11.0 (from flake8==6.1.0->-r requirements.txt (line 17))
+  Downloading pycodestyle-2.11.1-py2.py3-none-any.whl.metadata (4.5 kB)
+Collecting pyflakes<3.2.0,>=3.1.0 (from flake8==6.1.0->-r requirements.txt (line 17))
+  Downloading pyflakes-3.1.0-py2.py3-none-any.whl.metadata (3.5 kB)
+Collecting platformdirs>=2.2.0 (from pylint==3.0.2->-r requirements.txt (line 18))
+  Downloading platformdirs-4.4.0-py3-none-any.whl.metadata (12 kB)
+Collecting astroid<=3.1.0-dev0,>=3.0.1 (from pylint==3.0.2->-r requirements.txt (line 18))
+  Downloading astroid-3.0.3-py3-none-any.whl.metadata (4.5 kB)
+Collecting isort<6,>=4.2.5 (from pylint==3.0.2->-r requirements.txt (line 18))
+  Downloading isort-5.13.2-py3-none-any.whl.metadata (12 kB)
+Collecting tomlkit>=0.10.1 (from pylint==3.0.2->-r requirements.txt (line 18))
+  Downloading tomlkit-0.15.1-py3-none-any.whl.metadata (3.3 kB)
+Collecting typing-extensions>=3.10.0 (from pylint==3.0.2->-r requirements.txt (line 18))
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting dill>=0.2 (from pylint==3.0.2->-r requirements.txt (line 18))
+  Downloading dill-0.4.1-py3-none-any.whl.metadata (10 kB)
+Collecting tomli>=1.1.0 (from pylint==3.0.2->-r requirements.txt (line 18))
+  Downloading tomli-2.4.1-py3-none-any.whl.metadata (10 kB)
+Collecting python-dateutil>=2.4 (from Faker==19.13.0->-r requirements.txt (line 20))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/site-packages (from httpie==3.2.2->-r requirements.txt (line 21)) (26.0.1)
+Collecting charset-normalizer>=2.0.0 (from httpie==3.2.2->-r requirements.txt (line 21))
+  Downloading charset_normalizer-3.5.1-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (45 kB)
+Collecting defusedxml>=0.6.0 (from httpie==3.2.2->-r requirements.txt (line 21))
+  Downloading defusedxml-0.7.1-py2.py3-none-any.whl.metadata (32 kB)
+Collecting requests>=2.22.0 (from requests[socks]>=2.22.0->httpie==3.2.2->-r requirements.txt (line 21))
+  Downloading requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+Collecting Pygments>=2.5.2 (from httpie==3.2.2->-r requirements.txt (line 21))
+  Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting requests-toolbelt>=0.9.1 (from httpie==3.2.2->-r requirements.txt (line 21))
+  Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl.metadata (14 kB)
+Collecting multidict>=4.7.0 (from httpie==3.2.2->-r requirements.txt (line 21))
+  Downloading multidict-6.7.1-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.3 kB)
+Requirement already satisfied: setuptools in /opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/site-packages (from httpie==3.2.2->-r requirements.txt (line 21)) (79.0.1)
+Collecting rich>=9.10.0 (from httpie==3.2.2->-r requirements.txt (line 21))
+  Downloading rich-15.0.0-py3-none-any.whl.metadata (18 kB)
+Collecting zipp>=3.20 (from importlib-metadata>=3.6.0->Flask==2.2.5->-r requirements.txt (line 2))
+  Downloading zipp-3.23.1-py3-none-any.whl.metadata (3.6 kB)
+Collecting idna<4,>=2.5 (from requests>=2.22.0->requests[socks]>=2.22.0->httpie==3.2.2->-r requirements.txt (line 21))
+  Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+Collecting urllib3<3,>=1.21.1 (from requests>=2.22.0->requests[socks]>=2.22.0->httpie==3.2.2->-r requirements.txt (line 21))
+  Downloading urllib3-2.6.3-py3-none-any.whl.metadata (6.9 kB)
+Collecting certifi>=2017.4.17 (from requests>=2.22.0->requests[socks]>=2.22.0->httpie==3.2.2->-r requirements.txt (line 21))
+  Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+Collecting PySocks!=1.5.7,>=1.5.6 (from requests[socks]>=2.22.0->httpie==3.2.2->-r requirements.txt (line 21))
+  Downloading PySocks-1.7.1-py3-none-any.whl.metadata (13 kB)
+Collecting markdown-it-py>=2.2.0 (from rich>=9.10.0->httpie==3.2.2->-r requirements.txt (line 21))
+  Downloading markdown_it_py-3.0.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=9.10.0->httpie==3.2.2->-r requirements.txt (line 21))
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Downloading Flask-2.2.5-py3-none-any.whl (101 kB)
+Downloading Werkzeug-2.2.3-py3-none-any.whl (233 kB)
+Downloading flask_sqlalchemy-3.0.5-py3-none-any.whl (24 kB)
+Downloading SQLAlchemy-1.4.49-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 150.9 MB/s  0:00:00
+Downloading flask_talisman-1.1.0-py2.py3-none-any.whl (18 kB)
+Downloading Flask_Cors-3.0.10-py2.py3-none-any.whl (14 kB)
+Downloading psycopg2_binary-2.9.9-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.0/3.0 MB 234.0 MB/s  0:00:00
+Downloading python_dotenv-1.0.0-py3-none-any.whl (19 kB)
+Downloading gunicorn-21.2.0-py3-none-any.whl (80 kB)
+Downloading click-8.1.7-py3-none-any.whl (97 kB)
+Downloading nose-1.3.7-py3-none-any.whl (154 kB)
+Downloading pinocchio-0.4.3-py3-none-any.whl (12 kB)
+Downloading coverage-7.3.2-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (227 kB)
+Downloading flake8-6.1.0-py2.py3-none-any.whl (58 kB)
+Downloading pylint-3.0.2-py3-none-any.whl (510 kB)
+Downloading factory_boy-3.3.0-py2.py3-none-any.whl (36 kB)
+Downloading Faker-19.13.0-py3-none-any.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 225.3 MB/s  0:00:00
+Downloading httpie-3.2.2-py3-none-any.whl (127 kB)
+Downloading astroid-3.0.3-py3-none-any.whl (275 kB)
+Downloading isort-5.13.2-py3-none-any.whl (92 kB)
+Downloading mccabe-0.7.0-py2.py3-none-any.whl (7.3 kB)
+Downloading pycodestyle-2.11.1-py2.py3-none-any.whl (31 kB)
+Downloading pyflakes-3.1.0-py2.py3-none-any.whl (62 kB)
+Downloading charset_normalizer-3.5.1-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (262 kB)
+Downloading defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
+Downloading dill-0.4.1-py3-none-any.whl (120 kB)
+Downloading greenlet-3.2.5-cp39-cp39-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (587 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 587.5/587.5 kB 113.2 MB/s  0:00:00
+Downloading importlib_metadata-8.7.1-py3-none-any.whl (27 kB)
+Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading markupsafe-3.0.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (20 kB)
+Downloading multidict-6.7.1-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (240 kB)
+Downloading platformdirs-4.4.0-py3-none-any.whl (18 kB)
+Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 229.5 MB/s  0:00:00
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Downloading requests-2.32.5-py3-none-any.whl (64 kB)
+Downloading idna-3.20-py3-none-any.whl (69 kB)
+Downloading urllib3-2.6.3-py3-none-any.whl (131 kB)
+Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)
+Downloading PySocks-1.7.1-py3-none-any.whl (16 kB)
+Downloading rich-15.0.0-py3-none-any.whl (310 kB)
+Downloading markdown_it_py-3.0.0-py3-none-any.whl (87 kB)
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading tomli-2.4.1-py3-none-any.whl (14 kB)
+Downloading tomlkit-0.15.1-py3-none-any.whl (49 kB)
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Downloading zipp-3.23.1-py3-none-any.whl (10 kB)
+Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Installing collected packages: nose, Flask-Talisman, zipp, urllib3, typing-extensions, tomlkit, tomli, Six, python-dotenv, PySocks, Pygments, pyflakes, pycodestyle, psycopg2-binary, platformdirs, mdurl, mccabe, MarkupSafe, itsdangerous, isort, idna, gunicorn, greenlet, dill, defusedxml, coverage, colorama, click, charset-normalizer, certifi, Werkzeug, SQLAlchemy, requests, python-dateutil, pinocchio, multidict, markdown-it-py, Jinja2, importlib-metadata, flake8, astroid, rich, requests-toolbelt, pylint, Flask, Faker, httpie, Flask-SQLAlchemy, Flask-Cors, factory-boy
+
+Successfully installed Faker-19.13.0 Flask-2.2.5 Flask-Cors-3.0.10 Flask-SQLAlchemy-3.0.5 Flask-Talisman-1.1.0 Jinja2-3.1.6 MarkupSafe-3.0.3 PySocks-1.7.1 Pygments-2.21.0 SQLAlchemy-1.4.49 Six-1.17.0 Werkzeug-2.2.3 astroid-3.0.3 certifi-2026.7.22 charset-normalizer-3.5.1 click-8.1.7 colorama-0.4.6 coverage-7.3.2 defusedxml-0.7.1 dill-0.4.1 factory-boy-3.3.0 flake8-6.1.0 greenlet-3.2.5 gunicorn-21.2.0 httpie-3.2.2 idna-3.20 importlib-metadata-8.7.1 isort-5.13.2 itsdangerous-2.2.0 markdown-it-py-3.0.0 mccabe-0.7.0 mdurl-0.1.2 multidict-6.7.1 nose-1.3.7 pinocchio-0.4.3 platformdirs-4.4.0 psycopg2-binary-2.9.9 pycodestyle-2.11.1 pyflakes-3.1.0 pylint-3.0.2 python-dateutil-2.9.0.post0 python-dotenv-1.0.0 requests-2.32.5 requests-toolbelt-1.0.0 rich-15.0.0 tomli-2.4.1 tomlkit-0.15.1 typing-extensions-4.16.0 urllib3-2.6.3 zipp-3.23.1
+##[group]Run flake8 service tests --count --max-line-length=127 --statistics
+^[[36;1mflake8 service tests --count --max-line-length=127 --statistics^[[0m
+shell: /usr/bin/bash -e {0}
+env:
+  pythonLocation: /opt/hostedtoolcache/Python/3.9.25/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.9.25/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.25/x64/lib
+##[endgroup]
+0
+##[group]Run nosetests -v
+^[[36;1mnosetests -v^[[0m
+shell: /usr/bin/bash -e {0}
+env:
+  pythonLocation: /opt/hostedtoolcache/Python/3.9.25/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.9.25/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.25/x64/lib
+  DATABASE_URI: ***localhost:5432/testdb
+##[endgroup]
+nose.config: INFO: Ignoring files matching ['^\\.', '^_', '^setup\\.py$']
+nose.plugins.cover: INFO: Coverage report will include only packages: ['service']
+[2026-09-18 17:08:03,190] INFO in log_handlers: Logging handler established
+[2026-09-18 17:08:03,190] INFO in __init__: **********************************************************************
+[2026-09-18 17:08:03,190] INFO in __init__: **********  A C C O U N T   S E R V I C E   R U N N I N G  ***********
+[2026-09-18 17:08:03,190] INFO in __init__: **********************************************************************
+[2026-09-18 17:08:03,190] INFO in __init__: Service initialized!
+
+Test Cases for the Account Model
+^[[1;32m- It should create an Account and assign it an id^[[1;0m
+^[[1;32m- It should delete an Account from the database^[[1;0m
+^[[1;32m- It should deserialize an Account from a dictionary^[[1;0m
+^[[1;32m- It should raise DataValidationError for missing data^[[1;0m
+^[[1;32m- It should raise DataValidationError for bad data^[[1;0m
+^[[1;32m- It should list all Accounts in the database^[[1;0m
+^[[1;32m- It should read an Account by id^[[1;0m
+^[[1;32m- It should serialize an Account into a dictionary^[[1;0m
+^[[1;32m- It should update an existing Account^[[1;0m
+^[[1;32m- It should raise an error when updating without an id^[[1;0m
+
+Account Service Tests
+^[[1;32m- It should return the Access-Control-Allow-Origin CORS header^[[1;0m
+^[[1;32m- It should create a new Account^[[1;0m
+^[[1;32m- It should not create an Account with the wrong content type^[[1;0m
+^[[1;32m- It should delete an existing Account^[[1;0m
+^[[1;32m- It should return 204 even when deleting an Account that does not exist^[[1;0m
+^[[1;32m- It should return 200 OK from the health endpoint^[[1;0m
+^[[1;32m- It should return the service metadata at the root URL^[[1;0m
+^[[1;32m- It should list all Accounts^[[1;0m
+^[[1;32m- It should read a single Account^[[1;0m
+^[[1;32m- It should return 404 for an Account that does not exist^[[1;0m
+^[[1;32m- It should return the Talisman security headers^[[1;0m
+^[[1;32m- It should update an existing Account^[[1;0m
+^[[1;32m- It should return 404 when updating an Account that does not exist^[[1;0m
+
+Name                               Stmts   Miss Branch BrPart  Cover   Missing
+------------------------------------------------------------------------------
+service/__init__.py                   23     23      0      0     0%   7-46
+service/common/__init__.py             0      0      0      0   100%
+service/common/cli_commands.py         7      3      0      0    57%   11-13
+service/common/error_handlers.py      32     10      0      0    69%   14, 20-22, 50-52, 80-82
+service/common/log_handlers.py        12      1      2      1    86%   20
+service/common/status.py               9      0      0      0   100%
+service/config.py                      6      0      0      0   100%
+service/models.py                     67      4     10      2    92%   35, 80->90, 83, 117-118
+service/routes.py                     56      0     10      0   100%
+------------------------------------------------------------------------------
+TOTAL                                212     41     22      3    81%
+----------------------------------------------------------------------
+Ran 23 tests in 0.637s
+
+OK
+
+Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Post job cleanup.
+(node:2885) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.55.0
+Temporarily overriding HOME='/home/runner/work/_temp/dd8e2d3b-be5e-41a3-bd53-1732d666d7fe' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/devops-capstone-project/devops-capstone-project
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+http.https://github.com/.extraheader
+[command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Print service container logs: 5a7e972abd7345c78c723c0d820c841e_postgres13_c2fd0e
+##[command]/usr/bin/docker logs --details fccf8311c98fe6406e74887fc2607e9edba25711e69198c2475400494a593b40
+ The files belonging to this database system will be owned by user "postgres".
+ This user must also own the server process.
+ 
+ initdb: warning: enabling "trust" authentication for local connections
+ The database cluster will be initialized with locale "en_US.utf8".
+ You can change this by editing pg_hba.conf or using the option -A, or
+ The default database encoding has accordingly been set to "UTF8".
+ --auth-local and --auth-host, the next time you run initdb.
+ The default text search configuration will be set to "english".
+ 2026-09-18 17:07:31.692 UTC [1] LOG:  starting PostgreSQL 13.23 (Debian 13.23-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+ 
+ Data page checksums are disabled.
+ 2026-09-18 17:07:31.692 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+ 
+ 2026-09-18 17:07:31.692 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+ fixing permissions on existing directory /var/lib/postgresql/data ... ok
+ 2026-09-18 17:07:31.693 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+ creating subdirectories ... ok
+ 2026-09-18 17:07:31.695 UTC [63] LOG:  database system was shut down at 2026-09-18 17:07:31 UTC
+ selecting dynamic shared memory implementation ... posix
+ 2026-09-18 17:07:31.699 UTC [1] LOG:  database system is ready to accept connections
+ selecting default max_connections ... 100
+ 2026-09-18 17:07:40.821 UTC [77] FATAL:  role "root" does not exist
+ selecting default shared_buffers ... 128MB
+ 2026-09-18 17:07:50.885 UTC [85] FATAL:  role "root" does not exist
+ selecting default time zone ... Etc/UTC
+ 2026-09-18 17:08:00.950 UTC [93] FATAL:  role "root" does not exist
+ creating configuration files ... ok
+ running bootstrap script ... ok
+ performing post-bootstrap initialization ... ok
+ syncing data to disk ... ok
+ 
+ 
+ Success. You can now start the database server using:
+ 
+     pg_ctl -D /var/lib/postgresql/data -l logfile start
+ 
+ waiting for server to start....2026-09-18 17:07:31.392 UTC [48] LOG:  starting PostgreSQL 13.23 (Debian 13.23-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+ 2026-09-18 17:07:31.393 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+ 2026-09-18 17:07:31.395 UTC [49] LOG:  database system was shut down at 2026-09-18 17:07:31 UTC
+ 2026-09-18 17:07:31.399 UTC [48] LOG:  database system is ready to accept connections
+  done
+ server started
+ CREATE DATABASE
+ 
+ 
+ /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+ 
+ 2026-09-18 17:07:31.572 UTC [48] LOG:  received fast shutdown request
+ waiting for server to shut down....2026-09-18 17:07:31.572 UTC [48] LOG:  aborting any active transactions
+ 2026-09-18 17:07:31.574 UTC [48] LOG:  background worker "logical replication launcher" (PID 55) exited with exit code 1
+ 2026-09-18 17:07:31.575 UTC [50] LOG:  shutting down
+ 2026-09-18 17:07:31.581 UTC [48] LOG:  database system is shut down
+  done
+ server stopped
+ 
+ PostgreSQL init process complete; ready for start up.
+ 
+Stop and remove container: 5a7e972abd7345c78c723c0d820c841e_postgres13_c2fd0e
+##[command]/usr/bin/docker rm --force fccf8311c98fe6406e74887fc2607e9edba25711e69198c2475400494a593b40
+fccf8311c98fe6406e74887fc2607e9edba25711e69198c2475400494a593b40
+Remove container network: github_network_bf0138ee678f4217b423c8a5a17773e5
+##[command]/usr/bin/docker network rm github_network_bf0138ee678f4217b423c8a5a17773e5
+github_network_bf0138ee678f4217b423c8a5a17773e5
+Cleaning up orphan processes
+##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

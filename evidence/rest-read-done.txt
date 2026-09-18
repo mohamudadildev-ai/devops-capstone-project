@@ -1,0 +1,20 @@
+$ curl -i http://localhost:8080/accounts/1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100   148  100   148    0     0  52781      0 --:--:-- --:--:-- --:--:-- 74000
+HTTP/1.1 200 OK
+Server: gunicorn
+Date: Fri, 18 Sep 2026 17:09:23 GMT
+Connection: close
+Content-Type: application/json
+Content-Length: 148
+Access-Control-Allow-Origin: *
+Permissions-Policy: browsing-topics=()
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src 'self'; object-src 'none'
+Referrer-Policy: strict-origin-when-cross-origin
+
+{"address":"123 Main St, Anytown USA","date_joined":"2026-09-18","email":"jdoe@example.com","id":1,"name":"John Doe","phone_number":"555-555-5555"}

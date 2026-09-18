@@ -1,0 +1,38 @@
+$ curl -i -X DELETE http://localhost:8080/accounts/1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+HTTP/1.1 204 NO CONTENT
+Server: gunicorn
+Date: Fri, 18 Sep 2026 17:09:23 GMT
+Connection: close
+Content-Type: text/html; charset=utf-8
+Access-Control-Allow-Origin: *
+Permissions-Policy: browsing-topics=()
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src 'self'; object-src 'none'
+Referrer-Policy: strict-origin-when-cross-origin
+
+$ curl -i http://localhost:8080/accounts/1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100   102  100   102    0     0  53097      0 --:--:-- --:--:-- --:--:--   99k
+HTTP/1.1 404 NOT FOUND
+Server: gunicorn
+Date: Fri, 18 Sep 2026 17:09:23 GMT
+Connection: close
+Content-Type: application/json
+Content-Length: 102
+Access-Control-Allow-Origin: *
+Permissions-Policy: browsing-topics=()
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src 'self'; object-src 'none'
+Referrer-Policy: strict-origin-when-cross-origin
+
+{"error":"Not Found","message":"404 Not Found: Account with id [1] could not be found.","status":404}

@@ -1,0 +1,65 @@
+##[group]Run nosetests -v
+^[[36;1mnosetests -v^[[0m
+shell: /usr/bin/bash -e {0}
+env:
+  pythonLocation: /opt/hostedtoolcache/Python/3.9.25/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.9.25/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.25/x64/lib
+  DATABASE_URI: ***localhost:5432/testdb
+##[endgroup]
+nose.config: INFO: Ignoring files matching ['^\\.', '^_', '^setup\\.py$']
+nose.plugins.cover: INFO: Coverage report will include only packages: ['service']
+[2026-09-18 17:08:03,190] INFO in log_handlers: Logging handler established
+[2026-09-18 17:08:03,190] INFO in __init__: **********************************************************************
+[2026-09-18 17:08:03,190] INFO in __init__: **********  A C C O U N T   S E R V I C E   R U N N I N G  ***********
+[2026-09-18 17:08:03,190] INFO in __init__: **********************************************************************
+[2026-09-18 17:08:03,190] INFO in __init__: Service initialized!
+
+Test Cases for the Account Model
+^[[1;32m- It should create an Account and assign it an id^[[1;0m
+^[[1;32m- It should delete an Account from the database^[[1;0m
+^[[1;32m- It should deserialize an Account from a dictionary^[[1;0m
+^[[1;32m- It should raise DataValidationError for missing data^[[1;0m
+^[[1;32m- It should raise DataValidationError for bad data^[[1;0m
+^[[1;32m- It should list all Accounts in the database^[[1;0m
+^[[1;32m- It should read an Account by id^[[1;0m
+^[[1;32m- It should serialize an Account into a dictionary^[[1;0m
+^[[1;32m- It should update an existing Account^[[1;0m
+^[[1;32m- It should raise an error when updating without an id^[[1;0m
+
+Account Service Tests
+^[[1;32m- It should return the Access-Control-Allow-Origin CORS header^[[1;0m
+^[[1;32m- It should create a new Account^[[1;0m
+^[[1;32m- It should not create an Account with the wrong content type^[[1;0m
+^[[1;32m- It should delete an existing Account^[[1;0m
+^[[1;32m- It should return 204 even when deleting an Account that does not exist^[[1;0m
+^[[1;32m- It should return 200 OK from the health endpoint^[[1;0m
+^[[1;32m- It should return the service metadata at the root URL^[[1;0m
+^[[1;32m- It should list all Accounts^[[1;0m
+^[[1;32m- It should read a single Account^[[1;0m
+^[[1;32m- It should return 404 for an Account that does not exist^[[1;0m
+^[[1;32m- It should return the Talisman security headers^[[1;0m
+^[[1;32m- It should update an existing Account^[[1;0m
+^[[1;32m- It should return 404 when updating an Account that does not exist^[[1;0m
+
+Name                               Stmts   Miss Branch BrPart  Cover   Missing
+------------------------------------------------------------------------------
+service/__init__.py                   23     23      0      0     0%   7-46
+service/common/__init__.py             0      0      0      0   100%
+service/common/cli_commands.py         7      3      0      0    57%   11-13
+service/common/error_handlers.py      32     10      0      0    69%   14, 20-22, 50-52, 80-82
+service/common/log_handlers.py        12      1      2      1    86%   20
+service/common/status.py               9      0      0      0   100%
+service/config.py                      6      0      0      0   100%
+service/models.py                     67      4     10      2    92%   35, 80->90, 83, 117-118
+service/routes.py                     56      0     10      0   100%
+------------------------------------------------------------------------------
+TOTAL                                212     41     22      3    81%
+----------------------------------------------------------------------
+Ran 23 tests in 0.637s
+
+OK
+
