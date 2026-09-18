@@ -23,8 +23,8 @@ spec:
     - name: source
   params:
     - name: args
-      type: array
-      default: ["-v"]
+      type: string
+      default: "-v"
   steps:
     - name: test
       image: python:3.9-slim
@@ -32,4 +32,4 @@ spec:
       script: |
         #!/bin/bash
         pip install --no-cache-dir -r requirements.txt
-        nosetests $(params.args[*])
+        nosetests $(params.args)
